@@ -9,4 +9,12 @@ object Protocol {
       to: Currency
   )
 
+  final case class GetRatesRequests(
+    requests: Seq[GetRatesRequest]
+  )
+  object GetRatesRequests {
+    def apply(from: Currency, to: Currency): GetRatesRequests =
+      new GetRatesRequests(Seq(GetRatesRequest(from, to)))
+  }
+
 }

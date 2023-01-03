@@ -2,6 +2,10 @@ package forex.domain
 
 import cats.Show
 
+import scala.util.Try
+/*import io.circe.Decoder
+import io.circe.generic.semiauto.deriveDecoder*/
+
 sealed trait Currency
 
 object Currency {
@@ -27,16 +31,19 @@ object Currency {
     case USD => "USD"
   }
 
-  def fromString(s: String): Currency = s.toUpperCase match {
-    case "AUD" => AUD
-    case "CAD" => CAD
-    case "CHF" => CHF
-    case "EUR" => EUR
-    case "GBP" => GBP
-    case "NZD" => NZD
-    case "JPY" => JPY
-    case "SGD" => SGD
-    case "USD" => USD
-  }
+  def fromString(s: String): Option[Currency] = Try {
+    s.toUpperCase match {
+      case "AUD" => AUD
+      case "CAD" => CAD
+      case "CHF" => CHF
+      case "EUR" => EUR
+      case "GBP" => GBP
+      case "NZD" => NZD
+      case "JPY" => JPY
+      case "SGD" => SGD
+      case "USD" => USD
+    }
+  }.toOption
 
+  //implicit val currencyDecoder: Decoder[Currency] = deriveDecoder[Currency]
 }
